@@ -9,7 +9,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strings"
 
@@ -36,7 +36,7 @@ func Request(url string) (Container, error) {
 	}
 
 	defer resp.Body.Close()
-	bodyBytes, _ := ioutil.ReadAll(resp.Body)
+	bodyBytes, _ := io.ReadAll(resp.Body)
 	dec := json.NewDecoder(bytes.NewReader(bodyBytes))
 	dec.UseNumber()
 	container, err := gabs.ParseJSONDecoder(dec)
